@@ -1,0 +1,49 @@
+<div class="container">
+  <h1 class="heading">Monotonic Counter</h1>
+
+  <p class="description">
+    Enter an exponent <b>x</b> to see how many numbers below 10<sup>x</sup> are “increasing” or “decreasing”.
+  </p>
+
+  <%= form_with(url: monotonic_index_path, method: :get, local: true, html: { class: "form" }) do |f| %>
+    <div class="form-group">
+      <%= label_tag :x, "Enter x:", class: "form-label" %>
+      <%= text_field_tag :x, params[:x], class: "form-input" %>
+    </div>
+    <div class="form-group">
+      <%= submit_tag "Compute", class: "form-button" %>
+    </div>
+  <% end %>
+
+  <% if @result %>
+    <hr class="divider">
+    <p class="result">
+      For <b>x = <%= params[:x] %></b>, total_inc_dec(x) = <%= @result %>.
+    </p>
+  <% end %>
+
+  <!-- Back Button -->
+  <div class="back-button-container">
+    <% if params[:x] %>
+      <%= link_to "Back", "http://localhost:3000", class: "back-button" %>
+    <% end %>
+  </div>
+
+  <!-- Monotonic Numbers Function Section -->
+  <div class="card">
+    <h3>Monotonic Numbers Function</h3>
+    <p>Below are the sample inputs and expected outputs for the `total_inc_dec` function:</p>
+
+    <div class="card">
+      <h4>Sample Inputs and Outputs</h4>
+      <ul>
+        <% (0..6).each do |x| %>
+          <% monotonic_counter = MonotonicCounter.new %>  <!-- Create instance for each iteration -->
+          <li><strong>Input (x = <%= x %>)</strong>: 
+            <%= monotonic_counter.total_inc_dec(x) %> 
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
